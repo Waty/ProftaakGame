@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ProftaakGame
+namespace ProftaakGame.Objects
 {
     public class Enemy : IGameObject
     {

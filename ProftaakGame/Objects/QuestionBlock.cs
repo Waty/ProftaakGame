@@ -1,13 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ProftaakGame
+namespace ProftaakGame.Objects
 {
     internal class QuestionBlock : Block
     {
         private int counter;
         private int imageIndex;
         public QuestionBlock(Texture2D texture2D, Vector2 position) : base(texture2D, position) {}
+
+        public override Rectangle Bounds
+        {
+            get { return new Rectangle((int) Position.X, (int) Position.Y, Texture.Height, Texture.Height); }
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {

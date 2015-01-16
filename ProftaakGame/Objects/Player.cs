@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace ProftaakGame
+namespace ProftaakGame.Objects
 {
     public class Player : IGameObject
     {
@@ -94,7 +94,10 @@ namespace ProftaakGame
             {
                 drawCounter = 0;
                 imageIndex++;
-                if (imageIndex > 16) imageIndex = 0;
+                if (imageIndex > 16)
+                {
+                    imageIndex = 0;
+                }
             }
             if (velocity.X == 0.0F)
             {

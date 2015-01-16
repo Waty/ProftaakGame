@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProftaakGame.Objects;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace ProftaakGame
