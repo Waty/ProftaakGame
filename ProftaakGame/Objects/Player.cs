@@ -26,7 +26,7 @@ namespace ProftaakGame.Objects
             Lives = lives;
         }
 
-        private IEnumerable<Block> GameObjects
+        private List<Block> GameObjects
         {
             get { return map.GameObjects; }
         }
@@ -187,7 +187,23 @@ namespace ProftaakGame.Objects
 
         private bool HasCollisions
         {
-            get { return GameObjects.Any(obj => obj.Bounds.Intersects(Bounds)); }
+            get
+            {
+                foreach (Block obj in GameObjects)
+                {
+                    if (obj.Bounds.Intersects(Bounds))
+                    {
+                        if (obj is CoinBlock)
+                        {
+                            GameObjects.Remove(obj);
+                            Coins++;
+                            break;
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
 
         private void LimitVelocity()

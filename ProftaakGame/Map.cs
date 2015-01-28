@@ -55,6 +55,10 @@ namespace ProftaakGame
                         case 'Z':
                             GameObjects.Add(new QuestionBlock(content.Load<Texture2D>("questionBlock.png"), position));
                             break;
+
+                        case 'C':
+                            GameObjects.Add(new CoinBlock(this, content.Load<Texture2D>("coinBlock.png"), position));
+                            break;
                     }
                 }
             }

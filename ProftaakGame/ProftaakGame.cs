@@ -19,7 +19,7 @@ namespace ProftaakGame
             "X        X",
             "X        X",
             "X        X",
-            "X Y      X            X",
+            "X Y      X      C      X",
             "X                    XXX",
             "X                   XXXXX",
             "X                  XXXXXXX",

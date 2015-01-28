@@ -35,7 +35,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DataBase.cs" />
+    <Compile Include="CoinBlock.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -43,7 +43,6 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\Block.cs" />
-    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Objects\Enemy.cs" />
     <Compile Include="MenuForm.cs">
       <SubType>Form</SubType>
@@ -54,7 +53,6 @@
     <Compile Include="MessageBuilder.cs" />
     <Compile Include="ProftaakGame.cs" />
     <Compile Include="Highscore.cs" />
-    <Compile Include="Objects\IGameObject.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Program.cs" />
@@ -78,6 +76,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\block.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\coinBlock.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\goomba.png" />

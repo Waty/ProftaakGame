@@ -19,7 +19,7 @@ namespace ProftaakGame.Objects
             get { return new Rectangle((int) Position.X, (int) Position.Y, Texture.Width, Texture.Height); }
         }
 
-        public void Update() {}
+        public virtual void Update() {}
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
