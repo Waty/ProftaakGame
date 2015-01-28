@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ProftaakGame.Objects
 {
-    public class Block : IGameObject
+    public class Block
     {
         public Block(Texture2D texture, Vector2 position)
         {

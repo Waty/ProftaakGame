@@ -20,9 +20,14 @@ namespace ProftaakGame
         private static void Main()
         {
             Application.EnableVisualStyles();
-            using (var game = new ProftaakGame())
+            var mf = new MainForm();
+            while (mf.ShowDialog() == DialogResult.OK)
             {
-                game.Run();
+                using (var game = new ProftaakGame())
+                {
+                    game.Connection = new SerialConnection(mf.SerialPort);
+                    game.Run();
+                }
             }
         }
     }

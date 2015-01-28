@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ProftaakGame.Objects
 {
-    public class Enemy : IGameObject
+    public class Enemy
     {
         public Enemy(int lives, Texture2D texture)
         {

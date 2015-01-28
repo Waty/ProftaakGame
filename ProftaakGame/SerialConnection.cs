@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Ports;
 using System.Linq;
 
@@ -7,6 +8,17 @@ namespace ProftaakGame
 {
     public class SerialConnection
     {
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public enum MessageType
+        {
+            pre_Game,
+            in_Game,
+            menu,
+            win_Game,
+            set_coins,
+            set_lifes
+        }
+
         private const int BaudRate = 9600;
         private const char MessageBeginToken = '<';
         private const char MessageValuesSeperator = ';';
@@ -55,7 +67,12 @@ namespace ProftaakGame
         {
             string msg = new SerialData {Type = type, Parameters = data}.ToString();
             Debug.WriteLine("Sending " + msg);
-            serialPort.WriteLine(msg);
+            serialPort.WriteLine(' ' + msg);
+        }
+
+        public void Dispose()
+        {
+            serialPort.Dispose();
         }
 
         public class SerialData
@@ -76,14 +93,6 @@ namespace ProftaakGame
 
                 return MessageBeginToken + Type.ToString() + paramStr + MessageEndToken;
             }
-        }
-
-        public enum MessageType
-        {
-            Menu,
-            PreGame,
-            InGame,
-            Pause
         }
     }
 }

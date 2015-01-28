@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ProftaakGame.Objects
 {
-    public class Player : IGameObject
+    public class Player
     {
         private const float Acceleration = 0.5F;
         private const float JumpSpeed = 7.5F;
@@ -26,9 +26,9 @@ namespace ProftaakGame.Objects
             Lives = lives;
         }
 
-        private IEnumerable<IGameObject> GameObjects
+        private IEnumerable<Block> GameObjects
         {
-            get { return map.GameObjects.Where(o => o != this); }
+            get { return map.GameObjects; }
         }
 
         public int Lives { get; set; }

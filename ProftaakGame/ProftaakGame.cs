@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProftaakGame.Objects;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace ProftaakGame
 {
@@ -29,7 +28,6 @@ namespace ProftaakGame
         };
 
         public SerialConnection Connection;
-        private MainForm form;
         // ReSharper disable once NotAccessedField.Local
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -42,7 +40,7 @@ namespace ProftaakGame
             Window.AllowUserResizing = true;
         }
 
-        public List<IGameObject> GameObjects
+        public List<Block> Blocks
         {
             get { return Map.GameObjects; }
         }
@@ -53,23 +51,6 @@ namespace ProftaakGame
         }
 
         public Map Map { get; private set; }
-
-        /// <summary>
-        ///     Allows the game to perform any initialization it needs to before starting to run.
-        ///     This is where it can query for any required services and load any non-graphic
-        ///     related content.  Calling base.Initialize will enumerate through any components
-        ///     and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            form = new MainForm();
-            form.ShowDialog();
-
-
-            Connection = new SerialConnection(form.SerialPort);
-        }
 
         /// <summary>
         ///     LoadContent will be called once per game and is the place to load
@@ -88,7 +69,7 @@ namespace ProftaakGame
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            Connection.Dispose();
         }
 
         /// <summary>
@@ -109,10 +90,11 @@ namespace ProftaakGame
                 Debug.WriteLine(data.ToString());
             }
 
-            foreach (IGameObject gameObject in GameObjects)
+            foreach (Block block in Blocks)
             {
-                gameObject.Update();
+                block.Update();
             }
+            Player.Update();
 
             if (Player.IsDead)
             {
@@ -125,8 +107,8 @@ namespace ProftaakGame
 
         private void GameOver()
         {
-            MessageBox.Show("Game over nigga");
-            Player.Lives = 3;
+            Connection.WriteData(SerialConnection.MessageType.win_Game, new Object[] {0});
+            Exit();
         }
 
         /// <summary>
@@ -138,10 +120,11 @@ namespace ProftaakGame
             GraphicsDevice.Clear(Color.SkyBlue);
 
             spriteBatch.Begin();
-            foreach (IGameObject gameObject in GameObjects)
+            foreach (Block block in Blocks)
             {
-                gameObject.Draw(spriteBatch);
+                block.Draw(spriteBatch);
             }
+            Player.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

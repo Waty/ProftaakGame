@@ -18,7 +18,7 @@ namespace ProftaakGame
             Parse();
         }
 
-        public List<IGameObject> GameObjects { get; private set; }
+        public List<Block> GameObjects { get; private set; }
         public Player Player { get; private set; }
         public int Heigth { get; private set; }
 
@@ -26,7 +26,7 @@ namespace ProftaakGame
         {
             Heigth = data.Length*16;
 
-            GameObjects = new List<IGameObject>();
+            GameObjects = new List<Block>();
 
             const int size = 16;
             for (int y = 0; y < data.Length; y++)
@@ -50,7 +50,6 @@ namespace ProftaakGame
                             {
                                 Player.Position = position;
                             }
-                            GameObjects.Add(Player);
                             break;
 
                         case 'Z':
