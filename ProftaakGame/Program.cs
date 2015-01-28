@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 
 using System;
+using System.Windows.Forms;
 
 #endregion
 
@@ -18,6 +19,7 @@ namespace ProftaakGame
         [STAThread]
         private static void Main()
         {
+            Application.EnableVisualStyles();
             using (var game = new ProftaakGame())
             {
                 game.Run();

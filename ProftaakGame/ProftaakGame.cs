@@ -29,6 +29,7 @@ namespace ProftaakGame
         };
 
         public SerialConnection Connection;
+        private MainForm form;
         // ReSharper disable once NotAccessedField.Local
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -62,7 +63,12 @@ namespace ProftaakGame
         protected override void Initialize()
         {
             base.Initialize();
-            Connection = new SerialConnection("COM5");
+
+            form = new MainForm();
+            form.ShowDialog();
+
+
+            Connection = new SerialConnection(form.SerialPort);
         }
 
         /// <summary>
@@ -110,7 +116,7 @@ namespace ProftaakGame
 
             if (Player.IsDead)
             {
-                Highscore.Add(new Highscore(Player));
+                Highscore.Add(new Highscore(Player.Coins, Player.Lives));
                 GameOver();
             }
 
