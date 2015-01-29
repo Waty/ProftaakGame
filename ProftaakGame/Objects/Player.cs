@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,8 +12,10 @@ namespace ProftaakGame.Objects
         private readonly Map map;
         private readonly Vector2 maxVelocity = new Vector2(4, JumpSpeed);
         private readonly Vector2 scale = new Vector2(0.5F);
+        private int coins;
         private int drawCounter;
         private int imageIndex;
+        private int lives;
         private Vector2 position;
         private Vector2 velocity;
 
@@ -31,15 +32,39 @@ namespace ProftaakGame.Objects
             get { return map.GameObjects; }
         }
 
-        public int Lives { get; set; }
-        public int Coins { get; private set; }
+        public int Lives
+        {
+            get { return lives; }
+            private set
+            {
+                lives = value;
+                map.Game.Connection.WriteData(SerialConnection.MessageType.set_lifes, value);
+            }
+        }
+
+        public int Coins
+        {
+            get { return coins; }
+            private set
+            {
+                coins = value;
+                map.Game.Connection.WriteData(SerialConnection.MessageType.set_coins, value);
+            }
+        }
 
         public bool Flying
         {
             get
             {
                 var bounds = new Rectangle(Bounds.Left, Bounds.Bottom + 1, Bounds.Width, 1);
-                return !map.GameObjects.Any(obj => bounds.Intersects(obj.Bounds));
+                foreach (Block obj in map.GameObjects)
+                {
+                    if (bounds.Intersects(obj.Bounds))
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
         }
 
@@ -126,12 +151,6 @@ namespace ProftaakGame.Objects
             }
         }
 
-        private void KillEnemy(Enemy enemy)
-        {
-            enemy.Lives--;
-            Coins += 10;
-        }
-
         #region Movement
 
         private void Move()
@@ -189,22 +208,31 @@ namespace ProftaakGame.Objects
         {
             get
             {
-                foreach (Block obj in GameObjects)
+                foreach (Block block in GameObjects)
                 {
-                    if (obj.Bounds.Intersects(Bounds))
+                    if (block.Bounds.Intersects(Bounds))
                     {
-                        if (obj is CoinBlock)
+                        switch (block.Type)
                         {
-                            GameObjects.Remove(obj);
-                            Coins++;
-                            break;
+                            case BlockType.Coin:
+                                GameObjects.Remove(block);
+                                Coins++;
+                                return false;
+
+                            case BlockType.Flag:
+                                map.Game.Win();
+                                return true;
+
+                            default:
+                                return true;
                         }
-                        return true;
                     }
                 }
                 return false;
             }
         }
+
+        public string Name { get; set; }
 
         private void LimitVelocity()
         {

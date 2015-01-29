@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ProftaakGame.Objects;
 
@@ -8,16 +7,16 @@ namespace ProftaakGame
 {
     public class Map
     {
-        private readonly ContentManager content;
         private readonly string[] data;
 
-        public Map(ContentManager content, string[] data)
+        public Map(ProftaakGame game, string[] data)
         {
-            this.content = content;
+            Game = game;
             this.data = data;
             Parse();
         }
 
+        public ProftaakGame Game { get; private set; }
         public List<Block> GameObjects { get; private set; }
         public Player Player { get; private set; }
         public int Heigth { get; private set; }
@@ -38,13 +37,14 @@ namespace ProftaakGame
                     switch (str[x])
                     {
                         case 'X':
-                            GameObjects.Add(new Block(content.Load<Texture2D>("block.png"), position));
+                            GameObjects.Add(new Block(Game.Content.Load<Texture2D>("block.png"), position,
+                                BlockType.Regular));
                             break;
 
                         case 'Y':
                             if (Player == null)
                             {
-                                Player = new Player(this, content.Load<Texture2D>("mariolopen.png"), position, 3);
+                                Player = new Player(this, Game.Content.Load<Texture2D>("mario.png"), position, 3);
                             }
                             else
                             {
@@ -52,12 +52,12 @@ namespace ProftaakGame
                             }
                             break;
 
-                        case 'Z':
-                            GameObjects.Add(new QuestionBlock(content.Load<Texture2D>("questionBlock.png"), position));
+                        case 'C':
+                            GameObjects.Add(new Block(Game.Content.Load<Texture2D>("coin.png"), position, BlockType.Coin));
                             break;
 
-                        case 'C':
-                            GameObjects.Add(new CoinBlock(this, content.Load<Texture2D>("coinBlock.png"), position));
+                        case 'F':
+                            GameObjects.Add(new Block(Game.Content.Load<Texture2D>("flag.png"), position, BlockType.Flag));
                             break;
                     }
                 }

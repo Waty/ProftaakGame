@@ -5,12 +5,14 @@ namespace ProftaakGame.Objects
 {
     public class Block
     {
-        public Block(Texture2D texture, Vector2 position)
+        public Block(Texture2D texture, Vector2 position, BlockType type)
         {
             Texture = texture;
             Position = position;
+            Type = type;
         }
 
+        public BlockType Type { get; private set; }
         public Vector2 Position { get; private set; }
         public Texture2D Texture { get; private set; }
 
@@ -19,9 +21,9 @@ namespace ProftaakGame.Objects
             get { return new Rectangle((int) Position.X, (int) Position.Y, Texture.Width, Texture.Height); }
         }
 
-        public virtual void Update() {}
+        public void Update() {}
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Position, Color.White);
         }

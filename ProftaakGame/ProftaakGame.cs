@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,24 +12,15 @@ namespace ProftaakGame
     /// </summary>
     public class ProftaakGame : Game
     {
-        private readonly string[] mapData =
-        {
-            "XXXXXXXXXX",
-            "X        X",
-            "X        X",
-            "X        X",
-            "X Y      X      C      X",
-            "X                    XXX",
-            "X                   XXXXX",
-            "X                  XXXXXXX",
-            "X                 XXXXXXXXX      Z",
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-        };
-
         public SerialConnection Connection;
         // ReSharper disable once NotAccessedField.Local
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+
+        public Highscore Highscore
+        {
+            get { return new Highscore(Player.Name, Player.Coins, Player.Lives); }
+        }
 
         public ProftaakGame()
         {
@@ -51,6 +41,7 @@ namespace ProftaakGame
         }
 
         public Map Map { get; private set; }
+        public Level Level { get; set; }
 
         /// <summary>
         ///     LoadContent will be called once per game and is the place to load
@@ -60,7 +51,7 @@ namespace ProftaakGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Map = new Map(Content, mapData);
+            Map = new Map(this, Level.MapData);
         }
 
         /// <summary>
@@ -88,6 +79,7 @@ namespace ProftaakGame
             if (data != null)
             {
                 Debug.WriteLine(data.ToString());
+                HandleMessage(data);
             }
 
             foreach (Block block in Blocks)
@@ -98,16 +90,28 @@ namespace ProftaakGame
 
             if (Player.IsDead)
             {
-                Highscore.Add(new Highscore(Player.Coins, Player.Lives));
-                GameOver();
+                Lose();
             }
 
             base.Update(gameTime);
         }
 
-        private void GameOver()
+        private void HandleMessage(SerialConnection.SerialData data)
         {
-            Connection.WriteData(SerialConnection.MessageType.win_Game, new Object[] {0});
+            switch (data.Type)
+            {
+            }
+        }
+
+        private void Lose()
+        {
+            Connection.WriteData(SerialConnection.MessageType.win_Game, 0);
+            Exit();
+        }
+
+        public void Win()
+        {
+            Connection.WriteData(SerialConnection.MessageType.win_Game, 1);
             Exit();
         }
 

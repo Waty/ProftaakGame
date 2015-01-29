@@ -1,38 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ProftaakGame
 {
     public class Highscore
     {
-        private static readonly List<Highscore> Highscores = new List<Highscore>();
-
-        public Highscore(int coins, int lives)
+        public Highscore(string name, int coins, int lives)
         {
+            Name = name;
             Coins = coins;
             Lives = lives;
-            Time = DateTime.Now;
+            Date = DateTime.Now;
         }
 
-        public Highscore(DateTime date, int coins, int lives)
+        public Highscore(int id, string name, DateTime date, int coins, int lives)
         {
+            Id = id;
             Coins = coins;
             Lives = lives;
-            Time = date;
+            Name = name;
+            Date = date;
         }
 
-        public int Coins { get; set; }
-        public int Lives { get; set; }
-        public DateTime Time { get; set; }
+        public int Id { get; private set; }
+        public int Coins { get; private set; }
+        public int Lives { get; private set; }
+        public DateTime Date { get; private set; }
 
         public int Points
         {
-            get { return Coins*Lives; }
+            get { return Coins + Lives*100; }
         }
 
-        public static void Add(Highscore highscore)
-        {
-            Highscores.Add(highscore);
-        }
+        public string Name { get; set; }
     }
 }

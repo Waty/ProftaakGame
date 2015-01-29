@@ -25,8 +25,14 @@ namespace ProftaakGame
             {
                 using (var game = new ProftaakGame())
                 {
-                    game.Connection = new SerialConnection(mf.SerialPort);
+                    game.Connection = new SerialConnection(mf.PortName);
+                    game.Connection.WriteData(SerialConnection.MessageType.pre_Game);
+                    game.Level = mf.Level;
+                    game.Map.Player.Name = mf.UserName;
+
                     game.Run();
+
+                    mf.AddHighscore(game.Highscore);
                 }
             }
         }
