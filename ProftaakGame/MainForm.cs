@@ -104,6 +104,7 @@ namespace ProftaakGame
             settings.SerialPort = ddbSerialPorts.Text;
             settings.SelectedLevel = ddbLevels.SelectedIndex;
             settings.UserName = tbName.Text;
+            settings.Save();
         }
     }
 }

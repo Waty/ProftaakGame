@@ -24,7 +24,7 @@ namespace ProftaakGame
 
         public ProftaakGame()
         {
-            graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this) {IsFullScreen = true};
 
             Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
@@ -100,6 +100,17 @@ namespace ProftaakGame
         {
             switch (data.Type)
             {
+                case SerialConnection.MessageType.left:
+                    Player.StartWalkingLeft();
+                    break;
+
+                case SerialConnection.MessageType.right:
+                    Player.StartWalkingRight();
+                    break;
+
+                case SerialConnection.MessageType.up:
+                    Player.Jump();
+                    break;
             }
         }
 

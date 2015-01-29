@@ -16,7 +16,20 @@ namespace ProftaakGame
             menu,
             win_Game,
             set_coins,
-            set_lifes
+            set_lifes,
+
+            button1_pressed,
+            button2_pressed,
+            button3_pressed,
+            finger1_bend,
+            finger1_stretched,
+            finger2_bend,
+            finger3_stretched,
+            up,
+            down,
+            left,
+            right,
+            Recieve_Error
         }
 
         private const int BaudRate = 9600;
@@ -65,11 +78,11 @@ namespace ProftaakGame
 
         public void WriteData(MessageType type, object data = null)
         {
-            string msg = new SerialData
+            string msg = "YOLO" + new SerialData
             {
                 Type = type,
                 Parameters = (data == null) ? null : new[] {data}
-            }.ToString();
+            };
             Debug.WriteLine("Sending " + msg);
             serialPort.WriteLine(' ' + msg);
         }
@@ -91,7 +104,7 @@ namespace ProftaakGame
                 {
                     foreach (object parameter in Parameters)
                     {
-                        paramStr += (MessageValuesSeperator + parameter.ToString());
+                        paramStr += MessageValuesSeperator + parameter.ToString();
                     }
                 }
 

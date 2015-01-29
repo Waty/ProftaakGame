@@ -34,7 +34,7 @@ namespace ProftaakGame
                 for (int x = 0; x < str.Length; x++)
                 {
                     var position = new Vector2(x*size, y*size);
-                    switch (str[x])
+                    switch (char.ToUpper(str[x]))
                     {
                         case 'X':
                             GameObjects.Add(new Block(Game.Content.Load<Texture2D>("block.png"), position,

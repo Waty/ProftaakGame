@@ -27,6 +27,8 @@ namespace ProftaakGame
                 {
                     game.Connection = new SerialConnection(mf.PortName);
                     game.Connection.WriteData(SerialConnection.MessageType.pre_Game);
+                    new CalibreerForm().ShowDialog();
+                    game.Connection.WriteData(SerialConnection.MessageType.in_Game);
                     game.Level = mf.Level;
 
                     game.Run();

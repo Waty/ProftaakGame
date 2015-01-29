@@ -10,7 +10,7 @@ namespace ProftaakGame.Objects
         private const float Acceleration = 0.5F;
         private const float JumpSpeed = 7.5F;
         private readonly Map map;
-        private readonly Vector2 maxVelocity = new Vector2(4, JumpSpeed);
+        private readonly Vector2 maxVelocity = new Vector2(3, JumpSpeed);
         private readonly Vector2 scale = new Vector2(0.5F);
         private int coins;
         private int drawCounter;
@@ -18,6 +18,8 @@ namespace ProftaakGame.Objects
         private int lives;
         private Vector2 position;
         private Vector2 velocity;
+        private bool walkingLeft;
+        private bool walkingRight;
 
         public Player(Map map, Texture2D texture, Vector2 position, int lives)
         {
@@ -59,7 +61,7 @@ namespace ProftaakGame.Objects
                 var bounds = new Rectangle(Bounds.Left, Bounds.Bottom + 1, Bounds.Width, 1);
                 foreach (Block obj in map.GameObjects)
                 {
-                    if (obj.Type==BlockType.Regular && bounds.Intersects(obj.Bounds))
+                    if (obj.Type == BlockType.Regular && bounds.Intersects(obj.Bounds))
                     {
                         return false;
                     }
@@ -135,17 +137,36 @@ namespace ProftaakGame.Objects
 
         private void HandleInput()
         {
-            //TODO: replace regular keys with info from the arduino
             KeyboardState keyboard = Keyboard.GetState();
-            if (keyboard.IsKeyDown(Keys.Left))
+            if (keyboard.IsKeyDown(Keys.Left) || walkingLeft)
             {
                 velocity.X -= 1;
             }
-            if (keyboard.IsKeyDown(Keys.Right))
+            if (keyboard.IsKeyDown(Keys.Right) || walkingRight)
             {
                 velocity.X += 1;
             }
             if (keyboard.IsKeyDown(Keys.Space) && !Flying)
+            {
+                velocity.Y -= JumpSpeed;
+            }
+        }
+
+        public void StartWalkingLeft()
+        {
+            walkingLeft = true;
+            walkingRight = false;
+        }
+
+        public void StartWalkingRight()
+        {
+            walkingLeft = false;
+            walkingRight = true;
+        }
+
+        public void Jump()
+        {
+            if (!Flying)
             {
                 velocity.Y -= JumpSpeed;
             }
