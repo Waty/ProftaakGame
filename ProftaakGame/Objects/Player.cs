@@ -59,7 +59,7 @@ namespace ProftaakGame.Objects
                 var bounds = new Rectangle(Bounds.Left, Bounds.Bottom + 1, Bounds.Width, 1);
                 foreach (Block obj in map.GameObjects)
                 {
-                    if (bounds.Intersects(obj.Bounds))
+                    if (obj.Type==BlockType.Regular && bounds.Intersects(obj.Bounds))
                     {
                         return false;
                     }
@@ -222,6 +222,11 @@ namespace ProftaakGame.Objects
                             case BlockType.Flag:
                                 map.Game.Win();
                                 return true;
+
+                            case BlockType.Enemy:
+                                Lives--;
+                                map.Reset();
+                                break;
 
                             default:
                                 return true;

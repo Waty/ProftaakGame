@@ -4,6 +4,7 @@
     {
         Regular,
         Coin,
-        Flag
+        Flag,
+        Enemy
     }
 }

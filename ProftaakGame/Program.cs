@@ -28,10 +28,10 @@ namespace ProftaakGame
                     game.Connection = new SerialConnection(mf.PortName);
                     game.Connection.WriteData(SerialConnection.MessageType.pre_Game);
                     game.Level = mf.Level;
-                    game.Map.Player.Name = mf.UserName;
 
                     game.Run();
 
+                    game.Map.Player.Name = mf.UserName;
                     mf.AddHighscore(game.Highscore);
                 }
             }

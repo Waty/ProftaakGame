@@ -65,7 +65,11 @@ namespace ProftaakGame
 
         public void WriteData(MessageType type, object data = null)
         {
-            string msg = new SerialData {Type = type, Parameters = new[] {data}}.ToString();
+            string msg = new SerialData
+            {
+                Type = type,
+                Parameters = (data == null) ? null : new[] {data}
+            }.ToString();
             Debug.WriteLine("Sending " + msg);
             serialPort.WriteLine(' ' + msg);
         }

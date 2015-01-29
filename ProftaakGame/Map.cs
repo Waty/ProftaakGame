@@ -59,6 +59,10 @@ namespace ProftaakGame
                         case 'F':
                             GameObjects.Add(new Block(Game.Content.Load<Texture2D>("flag.png"), position, BlockType.Flag));
                             break;
+
+                        case 'M':
+                            GameObjects.Add(new Block(Game.Content.Load<Texture2D>("enemy.png"), position, BlockType.Enemy));
+                            break;
                     }
                 }
             }
